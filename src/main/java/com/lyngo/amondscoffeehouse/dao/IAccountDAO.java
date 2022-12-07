@@ -8,6 +8,6 @@ public interface IAccountDAO {
     boolean insertAccount(Account account);
     boolean updateAccount(Account account);
     boolean deleteAccount(Account account);
-    Account getAccount(String accountId);
+    Account getAccount(String email, String password);
     List<Account> getAccounts();
 }

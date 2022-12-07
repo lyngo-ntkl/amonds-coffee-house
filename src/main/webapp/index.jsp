@@ -8,7 +8,6 @@
 <body>
 <h1><%= "Hell" %>
 </h1>
-<c:if test="${1==1}">avfbdb</c:if>
 <br/>
 <a href="hello-servlet">Hello Servlet</a>
 </body>
