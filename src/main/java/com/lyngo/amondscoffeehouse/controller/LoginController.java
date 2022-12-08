@@ -13,6 +13,7 @@ import java.io.IOException;
 
 @WebServlet(name = "LoginController", value = "/LoginController")
 public class LoginController extends HttpServlet {
+
     private static final String ERROR = "loginPage.jsp";
     private static final String SUCCESS = "errorPage.html";
 
@@ -22,15 +23,15 @@ public class LoginController extends HttpServlet {
             String email = request.getParameter("email");
             String password = request.getParameter("password");
             AccountDAO accountDAO = new AccountDAO();
-            Account account = accountDAO.getAccount(email,password);
-            HttpSession session = request.getSession();
-            if(account != null){
+            Account account = accountDAO.getAccount(email, password);
+            if (account != null) {
+                HttpSession session = request.getSession();
                 session.setAttribute("USER", account);
                 url = SUCCESS;
             } else {
-                session.setAttribute("ERROR", "Invalid email or password");
+                request.setAttribute("ERROR", "Invalid email or password");
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             log("Error at : " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);

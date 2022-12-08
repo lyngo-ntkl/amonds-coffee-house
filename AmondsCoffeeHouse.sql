@@ -2,12 +2,12 @@ USE master
 GO
 /*
 DROP DATABASE IF EXISTS AmondsCoffeeHouse
-DROP TABLE IF EXISTS tblContacts
 DROP TABLE IF EXISTS tblOrderDetails
 DROP TABLE IF EXISTS tblOrders
-DROP TABLE IF EXISTS tblAccounts
 DROP TABLE IF EXISTS tblProducts
 DROP TABLE IF EXISTS tblCategories
+DROP TABLE IF EXISTS tblContacts
+DROP TABLE IF EXISTS tblAccounts
 */
 --GO
 CREATE DATABASE AmondsCoffeeHouse
@@ -110,15 +110,6 @@ CREATE TABLE tblOrderDetails(
 	WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 )
 GO
-
---SET IDENTITY_INSERT PlantShop ON
-
-SET IDENTITY_INSERT Accounts ON
-INSERT INTO Accounts(accID,email,password,fullname,phone,role,status) VALUES (1, 'admin@gmail.com', '123456', 'My Tam', '123456', 1, 1);
-INSERT INTO Accounts(accID,email,password,fullname,phone,role,status) VALUES (2, 'tung@gmail.com', '123456', 'Tung dep trai', '123', 1, 0);
-INSERT INTO Accounts(accID,email,password,fullname,phone,role,status) VALUES (3,'meow@gmail.com', '1', 'A Flying Cat', '12302', 0, 0);
-INSERT INTO Accounts(accID,email,password,fullname,phone,role,status) VALUES (4,'lanhhangiatoc@gmail.com', '1', 'A Flying Cat', '12302', 0, 1);
-SET IDENTITY_INSERT Accounts OFF
 
 
 

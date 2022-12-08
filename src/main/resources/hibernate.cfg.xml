@@ -13,6 +13,13 @@
     <property name="hibernate.hbm2ddl.auto">update</property>
     <property name="show_sql">true</property>
 
+    <mapping class="com.lyngo.amondscoffeehouse.dto.Account"></mapping>
+    <mapping class="com.lyngo.amondscoffeehouse.dto.Category"></mapping>
+    <mapping class="com.lyngo.amondscoffeehouse.dto.Contact"></mapping>
+    <mapping class="com.lyngo.amondscoffeehouse.dto.Product"></mapping>
+    <mapping class="com.lyngo.amondscoffeehouse.dto.Order"></mapping>
+    <mapping class="com.lyngo.amondscoffeehouse.dto.OrderDetail"></mapping>
+
     <!-- DB schema will be updated if needed -->
     <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
   </session-factory>

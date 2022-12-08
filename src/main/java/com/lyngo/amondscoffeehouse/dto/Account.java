@@ -3,6 +3,7 @@ package com.lyngo.amondscoffeehouse.dto;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,12 +21,14 @@ import java.util.Set;
 // generate setter
 @ToString
 // generate ToString()
-public class Account {
-//    public static final long serialVersionUID = 123456789;
+@EqualsAndHashCode
+public class Account implements Serializable {
+    public static final long serialVersionUID = 123456789;
     public static final String ROLEID_ADMIN = "AD";
     public static final String ROLEID_USER = "US";
 
     @Id
+    @Column(name="accountId")
     // annotation for primary key
     private String accountId;
     @Column(name = "email", unique = true)
@@ -51,6 +54,19 @@ public class Account {
         this.phone = phone;
         this.status = status;
     }
+
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//        Account account = (Account) o;
+//        return status == account.status && accountId.equals(account.accountId) && email.equals(account.email) && Objects.equals(password, account.password) && Objects.equals(username, account.username) && Objects.equals(roleId, account.roleId) && Objects.equals(phone, account.phone);
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(accountId, email, password, username, roleId, phone, status);
+//    }
 
     @OneToMany(mappedBy = "account")
     // one-to-many association

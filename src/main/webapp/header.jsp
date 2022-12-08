@@ -1,4 +1,4 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%--<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>--%>
 <html>
 <head>
     <link rel="icon" href="image/AmondsCoffeeHouseLogo1.png">
@@ -17,29 +17,29 @@
                     </li>
 
 
-                    <c:if test="${sessionScope.USER == null}">
+                    <%--<c:if test="${sessionScope.USER == null}">--%>
                         <li class="nav-item"><a href="registrationPage.jsp" class="nav-link">Register</a></li>
                         <li class="nav-item"><a href="loginPage.jsp" class="nav-link">Login</a></li>
-                    </c:if>
+                    <%--</c:if>--%>
 
-                    <c:if test="${sessionScope.USER != null && not empty sessionScope.USER}">
-                        <c:if test="${sessionScope.USER.role eq 'US'}">
+                    <%--<c:if test="${sessionScope.USER != null && not empty sessionScope.USER}">--%>
+                        <%--<c:if test="${sessionScope.USER.role eq 'US'}">--%>
                             <li class="nav-item"><a href="cart.jsp" class="nav-link">Cart</a></li>
                             <li class="nav-item"><a href="orderHistory.jsp" class="nav-link">Order history</a></li>
-                        </c:if>
-                        <c:if test="${sessionScope.USER.role eq 'AD'}">
+                        <%--</c:if>--%>
+                        <%--<c:if test="${sessionScope.USER.role eq 'AD'}">--%>
                             <li class="nav-item"><a href="MainController?action=View Accounts" class="nav-link">Manage
                                 accounts</a></li>
-                        </c:if>
+                        <%--</c:if>--%>
                         <li class="nav-item"><a href="MainController?action=Logout" class="nav-link">Logout</a></li>
-                    </c:if>
+                    <%--</c:if>--%>
                 </ul>
                 <form action="MainController" method="POST" class="d-flex">
                     <input type="search" name="key" value="${param.key}" class="form-control" placeholder="Keyword">
                     <select name="type" class="form-select form-select-lg">
                         <option value="name">by name</option>
                         <option value="category"
-                                <c:if test="${param.type == 'category'}">selected=""</c:if>>by category
+                                <%--c:if test="${param.type == 'category'}">selected=""</c:if--%>>by category
                         </option>
                     </select>
                     <input type="submit" value="Search" name="action" class="btn btn-outline-success">

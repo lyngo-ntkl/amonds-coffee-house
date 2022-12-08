@@ -86,7 +86,8 @@ public class AccountDAO implements IAccountDAO{
         //k co cach nao khac ngoai cach nay
         Account acc = null;
         try (Session session = sessionFactory.openSession()) {
-            Query<Account> query = session.createQuery("from Account where email=:email and password=:password", Account.class);
+            Query<Account> query = session.createQuery("FROM Account WHERE email=:email and password=:password", 
+                    Account.class);
             query.setParameter("email", email);
             query.setParameter("password", password);
             if(query.getResultList().size() == 1){
