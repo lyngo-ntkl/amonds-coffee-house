@@ -2,7 +2,9 @@
 
 ## Description
 
-* Amonds Coffee House is J2EE web application to manage coffee shop activities
+* Amonds Coffee House is Jakarta EE web application to manage coffee shop activities.
+* Technical stack: JakartaEE, Maven, Microsoft SQL Server, Bootstrap, Hibernate
+* This works on local only.
 
 #### Connect me via lyngo.ntkl@gmail.com
 
