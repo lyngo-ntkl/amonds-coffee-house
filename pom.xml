@@ -39,6 +39,8 @@
             <artifactId>hibernate-validator</artifactId>
             <version>8.0.0.Final</version>
         </dependency>
+
+        <!-- Testing -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
@@ -51,6 +53,26 @@
             <version>5.9.0</version>
             <scope>test</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-params -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <version>5.9.1</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>4.5.3</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/io.github.bonigarcia/webdrivermanager -->
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>5.0.3</version>
+        </dependency>
+
         <!-- JDBC -->
         <!-- https://mvnrepository.com/artifact/com.microsoft.sqlserver/mssql-jdbc -->
         <dependency>
@@ -67,22 +89,9 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-params -->
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-params</artifactId>
-            <version>5.9.1</version>
-            <scope>test</scope>
-        </dependency>
 
 
-        <!-- https://mvnrepository.com/artifact/org.apache.taglibs/taglibs-standard-impl -->
-        <dependency>
-            <groupId>org.apache.taglibs</groupId>
-            <artifactId>taglibs-standard-impl</artifactId>
-            <version>1.2.5</version>
-<!--            <scope>runtime</scope>-->
-        </dependency>
+
 
         <!-- https://mvnrepository.com/artifact/org.eclipse/yasson -->
         <dependency>
@@ -128,19 +137,21 @@
             <version>3.1.0</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/jakarta.servlet.jsp.jstl/jakarta.servlet.jsp.jstl-api -->
+        <!-- JSTL -->
+        <!-- https://mvnrepository.com/artifact/org.glassfish.web/jakarta.servlet.jsp.jstl -->
         <dependency>
-            <groupId>jakarta.servlet.jsp.jstl</groupId>
-            <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
-            <version>3.0.0</version>
+            <groupId>org.glassfish.web</groupId>
+            <artifactId>jakarta.servlet.jsp.jstl</artifactId>
+            <version>3.0.1</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/javax.servlet.jsp/javax.servlet.jsp-api -->
+        <!-- https://mvnrepository.com/artifact/org.eclipse.jetty/apache-jstl -->
         <dependency>
-            <groupId>javax.servlet.jsp</groupId>
-            <artifactId>javax.servlet.jsp-api</artifactId>
-            <version>2.3.3</version>
-            <scope>provided</scope>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>apache-jstl</artifactId>
+            <version>11.0.0</version>
         </dependency>
+
+
 
 
         <!-- https://mvnrepository.com/artifact/jakarta.servlet/jakarta.servlet-api -->

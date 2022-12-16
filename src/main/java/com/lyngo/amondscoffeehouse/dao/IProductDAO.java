@@ -10,4 +10,5 @@ public interface IProductDAO {
     boolean deleteProduct(Product product);
     Product getProduct(int productId);
     List<Product> getProducts();
+    List<Product> searchProducts(String searchKey, String type);
 }

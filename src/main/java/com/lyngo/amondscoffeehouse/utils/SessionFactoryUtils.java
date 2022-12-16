@@ -18,7 +18,8 @@ public class SessionFactoryUtils {
                     .addAnnotatedClass(Contact.class)
                     .addAnnotatedClass(Order.class)
                     .addAnnotatedClass(OrderDetail.class)
-                    .addAnnotatedClass(Product.class);
+                    .addAnnotatedClass(Product.class)
+                    .addAnnotatedClass(ProductImage.class);
             ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(con.getProperties()).build();
             sessionFactory = con.buildSessionFactory(serviceRegistry);
         }

@@ -2,7 +2,7 @@ package com.lyngo.amondscoffeehouse.dto;
 
 import jakarta.persistence.*;
 import lombok.*;
-
+import org.hibernate.annotations.UuidGenerator;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -28,8 +28,10 @@ public class Account implements Serializable {
     public static final String ROLEID_USER = "US";
 
     @Id
-    @Column(name="accountId")
     // annotation for primary key
+    @GeneratedValue
+    @UuidGenerator(style = UuidGenerator.Style.TIME)
+    //Generate UUID
     private String accountId;
     @Column(name = "email", unique = true)
     // annotation for mapping properties to column in database
@@ -55,18 +57,14 @@ public class Account implements Serializable {
         this.status = status;
     }
 
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//        Account account = (Account) o;
-//        return status == account.status && accountId.equals(account.accountId) && email.equals(account.email) && Objects.equals(password, account.password) && Objects.equals(username, account.username) && Objects.equals(roleId, account.roleId) && Objects.equals(phone, account.phone);
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(accountId, email, password, username, roleId, phone, status);
-//    }
+    public Account(String email, String password, String username, String roleId, String phone, boolean status) {
+        this.email = email;
+        this.password = password;
+        this.username = username;
+        this.roleId = roleId;
+        this.phone = phone;
+        this.status = status;
+    }
 
     @OneToMany(mappedBy = "account")
     // one-to-many association

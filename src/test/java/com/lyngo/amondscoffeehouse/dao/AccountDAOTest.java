@@ -7,11 +7,13 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
+import org.junit.jupiter.api.Test;
 
 public class AccountDAOTest {
 
     @ParameterizedTest
     @MethodSource("getAccount")
+    @Test
     public void testGetAccounts(String email, String password, Account account){
         Assertions.assertEquals(account, new AccountDAO().getAccount(email, password));
     }

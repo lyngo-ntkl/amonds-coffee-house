@@ -1,6 +1,7 @@
 package com.lyngo.amondscoffeehouse.dao;
 
 import com.lyngo.amondscoffeehouse.dto.Account;
+import com.lyngo.amondscoffeehouse.utils.EncryptionUtils;
 import com.lyngo.amondscoffeehouse.utils.SessionFactoryUtils;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -11,14 +12,14 @@ import java.util.List;
 
 public class AccountDAO implements IAccountDAO{
 
-    private SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
     public AccountDAO(){
         sessionFactory = SessionFactoryUtils.getSessionFactory();
     }
 
     @Override
     public boolean insertAccount(Account account) {
-        boolean check = false;
+        boolean check = true;
         Transaction transaction = null;
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
@@ -26,6 +27,7 @@ public class AccountDAO implements IAccountDAO{
             transaction.commit();
         } catch (Exception e){
             e.printStackTrace();
+            check = false;
             if(transaction != null){
                 transaction.rollback();
             }
@@ -50,6 +52,7 @@ public class AccountDAO implements IAccountDAO{
             if(check){
                 transaction.commit();
             }
+//            session.merge(account);
         } catch (Exception e){
             e.printStackTrace();
             if(transaction != null){
@@ -71,7 +74,7 @@ public class AccountDAO implements IAccountDAO{
             if(check){
                 transaction.commit();
             }
-//            session.remove(account); session.merge();
+//            session.remove(account);
         } catch (Exception e){
             e.printStackTrace();
             if(transaction != null){
@@ -83,12 +86,12 @@ public class AccountDAO implements IAccountDAO{
 
     @Override
     public Account getAccount(String email, String password) {
-        //k co cach nao khac ngoai cach nay
         Account acc = null;
         try (Session session = sessionFactory.openSession()) {
-            Query<Account> query = session.createQuery("FROM Account WHERE email=:email and password=:password", 
+            Query<Account> query = session.createQuery("FROM Account WHERE email=:email and password=:password and status=true",
                     Account.class);
             query.setParameter("email", email);
+            password = EncryptionUtils.encrypt(password);
             query.setParameter("password", password);
             if(query.getResultList().size() == 1){
                 acc = query.getResultList().get(0);
@@ -101,7 +104,6 @@ public class AccountDAO implements IAccountDAO{
 
     @Override
     public List<Account> getAccounts() {
-        //k co cach nao khac ngoai cach nay
         List<Account> accounts = null;
         try (Session session = sessionFactory.openSession()) {
             Query<Account> query = session.createQuery("from Account", Account.class);

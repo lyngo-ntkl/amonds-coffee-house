@@ -1,11 +1,9 @@
 package com.lyngo.amondscoffeehouse.dto;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,11 +11,14 @@ import java.util.Set;
 @AllArgsConstructor
 @Getter
 @Setter
+@EqualsAndHashCode
+@ToString
 @Entity
 @Table(name = "tblContacts")
-public class Contact{
-//    public static final long serialVersionUID = 123465789;
+public class Contact implements Serializable {
+    public static final long serialVersionUID = 123465789;
     @Id
+    @Column(name = "contactId")
     private String contactId;
     @Column(name = "phone")
     private String phone;
@@ -27,6 +28,15 @@ public class Contact{
     private String district;
     @Column(name = "ward")
     private String ward;
+
+    public Contact(String contactId, String phone, String city, String district, String ward, Account account) {
+        this.contactId = contactId;
+        this.phone = phone;
+        this.city = city;
+        this.district = district;
+        this.ward = ward;
+        this.account = account;
+    }
 
     @ManyToOne
     // many-to-one association

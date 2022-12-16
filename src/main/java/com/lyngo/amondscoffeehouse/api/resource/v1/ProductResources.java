@@ -7,9 +7,9 @@ import jakarta.ws.rs.Path;
 
 import java.util.List;
 
-//@Path("v1/products")
+@Path("v1/products")
 public class ProductResources {
-//    @GET
+    @GET
     public List<Product> getProduct(){
         return new ProductDAO().getProducts();
     }

@@ -4,6 +4,7 @@ GO
 DROP DATABASE IF EXISTS AmondsCoffeeHouse
 DROP TABLE IF EXISTS tblOrderDetails
 DROP TABLE IF EXISTS tblOrders
+DROP TABLE IF EXISTS tblProductImages
 DROP TABLE IF EXISTS tblProducts
 DROP TABLE IF EXISTS tblCategories
 DROP TABLE IF EXISTS tblContacts
@@ -18,7 +19,7 @@ GO
 
 /****** Object:  Table [dbo].[tblAccounts] ******/
 CREATE TABLE tblAccounts(
-	accountId VARCHAR(32) NOT NULL,
+	accountId VARCHAR(36) NOT NULL,
 	email VARCHAR(50) NOT NULL,
 	password VARCHAR(32) NOT NULL,
 	username VARCHAR(50)  NOT NULL,
@@ -36,8 +37,8 @@ GO
 
 /****** Object:  Table [dbo].[tblContacts] ******/
 CREATE TABLE tblContacts(
-	contactId VARCHAR(32) NOT NULL,
-	accountId VARCHAR(32) NOT NULL,
+	contactId VARCHAR(36) NOT NULL,
+	accountId VARCHAR(36) NOT NULL,
 	phone VARCHAR(15),
 	city VARCHAR(20),
 	district VARCHAR(20),
@@ -72,10 +73,27 @@ CREATE TABLE tblProducts(
 	price MONEY NOT NULL,
 	quantity INT NOT NULL,
 	categoryId INT,
-	imgPath VARCHAR(50),
 	description TEXT,
 	CONSTRAINT FK_tblProducts FOREIGN KEY (categoryId) REFERENCES tblCategories,
 	CONSTRAINT PK_tblProducts PRIMARY KEY CLUSTERED(productId ASC)
+	WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+)
+GO
+
+Americano	20000.0000	100	2
+Earl Grey	25000.0000	100	1
+Espresso	20000.0000	100	2
+Latte	20000.0000	100	2
+Red Velvet	30000.0000	100	4
+Black Forest	30000.0000	100	4
+select p1_0.productId,p1_0.categoryId,p1_0.description,p1_0.price,p1_0.productName,p1_0.quantity from tblProducts p1_0 where p1_0.productName like '%e%'
+
+/****** Object:  Table [dbo].[tblProductImages] ******/
+CREATE TABLE tblProductImages(
+	productId INT NOT NULL,
+	imgPath VARCHAR(70) NOT NULL,
+	CONSTRAINT FK_tblProductImages FOREIGN KEY (productId) REFERENCES tblProducts,
+	CONSTRAINT PK_tblProductImages PRIMARY KEY CLUSTERED(imgPath ASC)
 	WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 )
 GO
@@ -84,10 +102,11 @@ GO
 /****** Object:  Table [dbo].[tblOrders] ******/
 CREATE TABLE tblOrders(
 	orderId VARCHAR(32) NOT NULL,
-	contactId VARCHAR(32) NOT NULL,
+	contactId VARCHAR(36) NOT NULL,
 	status VARCHAR(2) CHECK(status = 'PR' or status = 'CO' or status = 'CA'), -- PR: processing, CO: completed, CA: cancel
 	orderDate DATETIME,
 	shipDate DATETIME,
+	deliveryCharge MONEY,
 	total MONEY,
 	CONSTRAINT FK_tblOrders FOREIGN KEY (contactId) REFERENCES tblContacts,
 	CONSTRAINT PK_tblOrders PRIMARY KEY CLUSTERED (orderId ASC)
@@ -100,9 +119,10 @@ GO
 CREATE TABLE tblOrderDetails(
 	detailId VARCHAR(32) NOT NULL,
 	orderId VARCHAR(32) NOT NULL,
-	productId INT,
+	productId INT NOT NULL,
 	price MONEY,
 	quantity INT,
+	discount MONEY,
 	total MONEY,
 	CONSTRAINT FK_tblOrderDetail_Order FOREIGN KEY (orderId) REFERENCES tblOrders,
 	CONSTRAINT FK_tblOrderDetail_Product FOREIGN KEY (productId) REFERENCES tblProducts,
@@ -110,121 +130,3 @@ CREATE TABLE tblOrderDetails(
 	WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 )
 GO
-
-
-
-USE [master]
-GO
-drop database MilkTeaShopManagement
-go
-/****** Object:  Database [MilkTeaShopManagement]    Script Date: 11/27/2021 13:04:02 ******/
-CREATE DATABASE [MilkTeaShopManagement] ON  PRIMARY 
-( NAME = N'MilkTeaShopManagement', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL10_50.SQLEXPRESS\MSSQL\DATA\MilkTeaShopManagement.mdf' , SIZE = 2048KB , MAXSIZE = UNLIMITED, FILEGROWTH = 1024KB )
- LOG ON 
-( NAME = N'MilkTeaShopManagement_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL10_50.SQLEXPRESS\MSSQL\DATA\MilkTeaShopManagement_log.ldf' , SIZE = 1024KB , MAXSIZE = 2048GB , FILEGROWTH = 10%)
-GO
-ALTER DATABASE [MilkTeaShopManagement] SET COMPATIBILITY_LEVEL = 100
-GO
-IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
-begin
-EXEC [MilkTeaShopManagement].[dbo].[sp_fulltext_database] @action = 'enable'
-end
-GO
-ALTER DATABASE [MilkTeaShopManagement] SET ANSI_NULL_DEFAULT OFF
-GO
-ALTER DATABASE [MilkTeaShopManagement] SET ANSI_NULLS OFF
-GO
-ALTER DATABASE [MilkTeaShopManagement] SET ANSI_PADDING OFF
-GO
-ALTER DATABASE [MilkTeaShopManagement] SET ANSI_WARNINGS OFF
-GO
-ALTER DATABASE [MilkTeaShopManagement] SET ARITHABORT OFF
-GO
-ALTER DATABASE [MilkTeaShopManagement] SET AUTO_CLOSE OFF
-GO
-ALTER DATABASE [MilkTeaShopManagement] SET AUTO_CREATE_STATISTICS ON
-GO
-ALTER DATABASE [MilkTeaShopManagement] SET AUTO_SHRINK OFF
-GO
-ALTER DATABASE [MilkTeaShopManagement] SET AUTO_UPDATE_STATISTICS ON
-GO
-ALTER DATABASE [MilkTeaShopManagement] SET CURSOR_CLOSE_ON_COMMIT OFF
-GO
-ALTER DATABASE [MilkTeaShopManagement] SET CURSOR_DEFAULT  GLOBAL
-GO
-ALTER DATABASE [MilkTeaShopManagement] SET CONCAT_NULL_YIELDS_NULL OFF
-GO
-ALTER DATABASE [MilkTeaShopManagement] SET NUMERIC_ROUNDABORT OFF
-GO
-ALTER DATABASE [MilkTeaShopManagement] SET QUOTED_IDENTIFIER OFF
-GO
-ALTER DATABASE [MilkTeaShopManagement] SET RECURSIVE_TRIGGERS OFF
-GO
-ALTER DATABASE [MilkTeaShopManagement] SET  DISABLE_BROKER
-GO
-ALTER DATABASE [MilkTeaShopManagement] SET AUTO_UPDATE_STATISTICS_ASYNC OFF
-GO
-ALTER DATABASE [MilkTeaShopManagement] SET DATE_CORRELATION_OPTIMIZATION OFF
-GO
-ALTER DATABASE [MilkTeaShopManagement] SET TRUSTWORTHY OFF
-GO
-ALTER DATABASE [MilkTeaShopManagement] SET ALLOW_SNAPSHOT_ISOLATION OFF
-GO
-ALTER DATABASE [MilkTeaShopManagement] SET PARAMETERIZATION SIMPLE
-GO
-ALTER DATABASE [MilkTeaShopManagement] SET READ_COMMITTED_SNAPSHOT OFF
-GO
-ALTER DATABASE [MilkTeaShopManagement] SET HONOR_BROKER_PRIORITY OFF
-GO
-ALTER DATABASE [MilkTeaShopManagement] SET  READ_WRITE
-GO
-ALTER DATABASE [MilkTeaShopManagement] SET RECOVERY SIMPLE
-GO
-ALTER DATABASE [MilkTeaShopManagement] SET  MULTI_USER
-GO
-ALTER DATABASE [MilkTeaShopManagement] SET PAGE_VERIFY CHECKSUM
-GO
-ALTER DATABASE [MilkTeaShopManagement] SET DB_CHAINING OFF
-GO
-USE [MilkTeaShopManagement]
-GO
-drop table tblUsers
-go
-
-/****** Object:  Table [dbo].[tblUsers]    Script Date: 11/27/2021 13:04:02 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE tblUsers(
-	[userID] [nvarchar](50) NOT NULL,
-	[fullName] [nvarchar](50) NULL,
-	[password] [nvarchar](50) NULL, 
-	[roleID] [nvarchar](50) NULL,
-	[status] [bit] NULL,
- CONSTRAINT [PK_tblUsers] PRIMARY KEY CLUSTERED 
-(
-	[userID] ASC
-)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-INSERT [dbo].[tblUsers] ([userID], [fullName], [password], [roleID], [status]) VALUES (N'admin', N'Toi la admin', N'1', N'AD', 1)
-INSERT [dbo].[tblUsers] ([userID], [fullName], [password], [roleID], [status]) VALUES (N'Hoadnt', N'Hoa Doan', N'1', N'US', 1)
-
-
-INSERT tblProduct(productID, productName, price, quantity, categoryID) VALUES ('T01','Lemon Tea',15,20,'B1')
-INSERT tblProduct(productID, productName, price, quantity, categoryID) VALUES ('T02','Chamomile Tea',32,20,'B1')
-INSERT tblProduct(productID, productName, price, quantity, categoryID) VALUES ('T03','Hibiscus Tea',15,20,'B1')
-INSERT tblProduct(productID, productName, price, quantity, categoryID) VALUES ('T04','Ginger Tea',69,20,'B1')
-INSERT tblProduct(productID, productName, price, quantity, categoryID) VALUES ('T05','Earl Grey Tea',15,20,'B1')
-INSERT tblProduct(productID, productName, price, quantity, categoryID) VALUES ('T06','Ceylons Tea',15,20,'B1')
-INSERT tblProduct(productID, productName, price, quantity, categoryID) VALUES ('C01','Espresso',15,20,'B2')
-INSERT tblProduct(productID, productName, price, quantity, categoryID) VALUES ('C02','Americano',20,20,'B2')
-INSERT tblProduct(productID, productName, price, quantity, categoryID) VALUES ('C03','Latte',67,20,'B2')
-INSERT tblProduct(productID, productName, price, quantity, categoryID) VALUES ('C04','Machiato',15,20,'B2')
-INSERT tblProduct(productID, productName, price, quantity, categoryID) VALUES ('C05','Affogato',35,20,'B2')
-INSERT tblProduct(productID, productName, price, quantity, categoryID) VALUES ('M01','Brown Sugar Boba Milktea',15,20,'B3')
-INSERT tblProduct(productID, productName, price, quantity, categoryID) VALUES ('M02','Matcha Milktea',15,20,'B3')
-INSERT tblProduct(productID, productName, price, quantity, categoryID) VALUES ('M03','Original Milktea',50,20,'B3')
-INSERT tblProduct(productID, productName, price, quantity, categoryID) VALUES ('M04','Taro Milktea',15,20,'B3')
-INSERT tblProduct(productID, productName, price, quantity, categoryID) VALUES ('M05','Almond Milktea',29,20,'B3')

@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8"%>
 <%@ include file="header.jsp"%>
 <html>
 <head>
@@ -18,16 +18,12 @@
         <input name="password" type="password" class="form-control" id="password">
       </div>
     </div>
-    <div class="row">
+    <div class="mb-3 row">
       <button value="Login" name="action" type="submit" class="btn btn-primary">Login</button>
     </div>
   </form>
-  <%
-    String error = (String) request.getAttribute("ERROR");
-    if (error == null) {
-      error = "";
-    }
-  %>
-  <%=error%>
+  <c:if test="${requestScope.ERROR != null && not empty requestScope.ERROR}">
+      ${ERROR}
+  </c:if>
 </body>
 </html>
